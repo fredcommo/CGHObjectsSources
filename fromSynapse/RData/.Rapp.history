@@ -1,0 +1,639 @@
+points(rbind(x1, x2, x3, x4), pch = 19)
+plot(seq(1, 20), seq(1, 20), type = 'n')#
+abline(-2, 5)#
+abline(5, 2)#
+abline(10, 0.5)#
+abline(19, -1)#
+abline(40, -3)#
+#
+A = matrix(c(-2, 5, 5, 2, 10, 0.5, 10, -1, 40, -3), 5, 2, byrow = T)#
+A#
+B = c(31/3, 45/3, 19, 30, 10)#
+#
+x1 = c(7/3, 29/3)#
+x2 = c(10/3, 35/3)#
+x3 = c(6, 13)#
+x4 = c(21/2, 17/2)
+points(rbind(x1, x2, x3, x4), pch = 19)
+A[1,]%*%x1
+A[2,]%*%x2
+A[1,]%*%x2
+A[3,]%*%x3
+A[4,]%*%x4
+A = matrix(c(-2, 5, 5, 2, 10, 0.5, 10, -1, 40, -3), 5, 2, byrow = T)#
+B = c(43.66, 40, 51.66, 66.5, 96.5)
+B
+solve(A)%*%B
+solve(A[1:2,])%*%B[1:2]
+7/3
+29/3
+B = c(43.666666, 40, 51.66, 66.5, 96.5)
+solve(A[1:2,])%*%B[1:2]
+abline(14, -2, lwd = 3)
+abline(14, -0.5, lwd = 3)
+abline(14, -0.4, lwd = 3)
+abline(14, -0.3, lwd = 3)
+abline(14, -0.2, lwd = 3)
+abline(14.2, -0.2, lwd = 3)
+plot(seq(1, 20), seq(1, 20), type = 'n')#
+abline(-2, 5)#
+abline(5, 2)#
+abline(10, 0.5)#
+abline(19, -1)#
+abline(40, -3)#
+abline(14.2, -0.2, lwd = 3)#
+#
+A = matrix(c(-2, 5, 5, 2, 10, 0.5, 10, -1, 40, -3), 5, 2, byrow = T)#
+B = c(43.66, 40, 51.66, 66.5, 96.5)#
+#
+x1 = c(7/3, 29/3)#
+x2 = c(10/3, 35/3)#
+x3 = c(6, 13)#
+x4 = c(21/2, 17/2)#
+points(rbind(x1, x2, x3, x4), pch = 19)
+abline(15.2, -0.4, lwd = 3)
+abline(15.4, -0.4, lwd = 3)
+plot(seq(1, 20), seq(1, 20), type = 'n')#
+abline(-2, 5)#
+abline(5, 2)#
+abline(10, 0.5)#
+abline(19, -1)#
+abline(40, -3)#
+abline(15.4, -0.4, lwd = 3)
+A = matrix(c(-2, 5, 5, 2, 10, 0.5, 10, -1, 40, -3), 5, 2, byrow = T)#
+B = c(43.66, 40, 51.66, 66.5, 96.5)#
+#
+x1 = c(7/3, 29/3)#
+x2 = c(10/3, 35/3)#
+x3 = c(6, 13)#
+x4 = c(21/2, 17/2)#
+points(rbind(x1, x2, x3, x4), pch = 19)
+abline(16.4, -0.6, lwd = 3)
+abline(16.5, -0.6, lwd = 3)
+abline(16.6, -0.6, lwd = 3)
+plot(seq(1, 20), seq(1, 20), type = 'n')#
+abline(-2, 5)#
+abline(5, 2)#
+abline(10, 0.5)#
+abline(19, -1)#
+abline(40, -3)#
+abline(16.6, -0.6, lwd = 3)#
+#
+A = matrix(c(-2, 5, 5, 2, 10, 0.5, 10, -1, 40, -3), 5, 2, byrow = T)#
+B = c(43.66, 40, 51.66, 66.5, 96.5)#
+#
+x1 = c(7/3, 29/3)#
+x2 = c(10/3, 35/3)#
+x3 = c(6, 13)#
+x4 = c(21/2, 17/2)#
+points(rbind(x1, x2, x3, x4), pch = 19)
+check <- function(x, y){#
+	c1 = x<=2#
+	c2 = x+2*y>=2#
+	c3 = x+2*y<=6#
+	c4 = x-2*y>=(-2)#
+	c5  = 3*x+6*y <= 18#
+	return(c(c1, c2, c3, c4, c5))#
+}#
+#
+check(2, 0)#
+check(0, 1)#
+check(3/2, 1/2)#
+check(2, 1)
+check <- function(x, y){#
+	c1 = x<=2#
+	c2 = x+2*y = 2#
+	c3 = x+2*y = 6#
+	c4 = x-2*y = (-2)#
+	c5  = 3*x+6*y = 18#
+	return(c(c1, c2, c3, c4, c5))#
+}#
+#
+check(2, 0)#
+check(0, 1)#
+check(3/2, 1/2)#
+check(2, 1)
+check <- function(x, y){#
+	c1 = x == 2#
+	c2 = x+2*y == 2#
+	c3 = x+2*y == 6#
+	c4 = x-2*y == (-2)#
+	c5  = 3*x+6*y == 18#
+	return(c(c1, c2, c3, c4, c5))#
+}#
+#
+check(2, 0)#
+check(0, 1)#
+check(3/2, 1/2)#
+check(2, 1)
+check(2, 2)
+check(2, 2)#
+check(0,1)
+x = seq(0, 5)#
+par(mfrow = c(2,2))#
+plot(x, x, type = 'n')#
+abline(0, 1)#
+#
+plot(x, x, type = 'n')#
+abline(h = 2, v = 2)#
+abline(0, 1)#
+abline(2, -1)#
+#
+plot(x, x, type = 'n')#
+abline(h = 1, v = 1)#
+abline(1, 1)#
+abline(-1, 1)#
+abline(1, -1)
+x = seq(0, 2)#
+par(mfrow = c(2,2))#
+plot(x, x, type = 'n')#
+abline(0, 1)#
+#
+plot(x, x, type = 'n')#
+abline(h = 2, v = 2)#
+abline(0, 1)#
+abline(2, -1)#
+#
+plot(x, x, type = 'n')#
+abline(h = 1, v = 1)#
+abline(1, 1)#
+abline(-1, 1)#
+abline(1, -1)
+x = seq(0, 3)#
+par(mfrow = c(2,2))#
+plot(x, x, type = 'n')#
+abline(0, 1)#
+#
+plot(x, x, type = 'n')#
+abline(h = 2, v = 2)#
+abline(0, 1)#
+abline(2, -1)#
+#
+plot(x, x, type = 'n')#
+abline(h = 1, v = 1)#
+abline(1, 1)#
+abline(-1, 1)#
+abline(1, -1)
+x = seq(0, 2)#
+par(mfrow = c(2,2))#
+plot(x, x, type = 'n')#
+abline(0, 1)#
+#
+plot(x, x, type = 'n')#
+abline(h = 2, v = 2)#
+abline(0, 1)#
+abline(2, -1)#
+#
+plot(x, x, type = 'n')#
+abline(h = 1, v = 1)#
+abline(1, 1)#
+abline(-1, 1)#
+abline(1, -1)
+par(mfrow = c(2,2))#
+plot(x, x, type = 'n')#
+abline(0, 1)#
+#
+x = seq(0, 2)#
+plot(x, x, type = 'n')#
+abline(h = 2, v = 2)#
+abline(0, 1)#
+abline(2, -1)#
+#
+x = seq(0, 1)#
+plot(x, x, type = 'n')#
+abline(h = 1, v = 1)#
+abline(1, 1)#
+abline(-1, 1)#
+abline(1, -1)
+A = Matrix(c(0, -1, -1, 1, 1, 1), 2, 3, byrow = T)
+A = matrix(c(0, -1, -1, 1, 1, 1), 2, 3, byrow = T)
+A
+A = matrix(c(0, -1, -1, 1, 1, 1), 3, 2, byrow = T)#
+A
+B = c(2, 3)#
+A[B,]
+x = matrix(c(1, 1))
+x
+c = matrix(c(2, 1))
+solve(c)%*%x
+t(c)%*%x
+l1 = c(-1/2, 3/2)#
+l2 = c(1/2, -3/2)#
+l3 = c(1/2, 3/2)#
+t(l1)%*%A[B,]
+t(l1)%*%A[B,]#
+t(l2)%*%A[B,]#
+t(l3)%*%A[B,]
+t(l1)%*%A[B,]*x
+x
+t(l1)%*%A[B,]%*%x#
+t(l2)%*%A[B,]%*%x#
+t(l3)%*%A[B,]%*%x
+c1 = t(l1)%*%A[B,]#
+t(c1)%*%x#
+c2 = t(l2)%*%A[B,]#
+t(c2)%*%x#
+c3 = t(l3)%*%A[B,]%*%x#
+t(c3)%*%x
+c1
+c1 = t(l1)%*%A[B,]#
+c1%*%x#
+c2 = t(l2)%*%A[B,]#
+c2%*%x#
+c3 = t(l3)%*%A[B,]%*%x#
+c3%*%x
+c3 = t(l3)%*%A[B,]#
+c3%*%x
+c1 = t(l1)%*%A[B,]; c1#
+c1%*%x#
+c2 = t(l2)%*%A[B,]; c2#
+c2%*%x#
+c3 = t(l3)%*%A[B,]; c3#
+c3%*%x
+x1 = matrix(c(1, 0))
+x1
+check <- function(x, y){#
+	c1 = 4*x - y == 4#
+	c2 = x+2*y == 10#
+	c3 = 2*x+y == 1#
+	c4 = 5*x-2*y == 23#
+	c5 = 4*x+2*y == 4#
+}#
+#
+x1 = matrix(c(1, 0))#
+check(x1)
+check(1, 0)
+check <- function(x, y){#
+	c1 = 4*x - y == 4#
+	c2 = x+2*y == 10#
+	c3 = 2*x+y == 1#
+	c4 = 5*x-2*y == 23#
+	c5 = 4*x+2*y == 4#
+	return(c(c1, c2, c3, c4, c5))#
+}#
+#
+x1 = matrix(c(1, 0))#
+check(1, 0)
+B = which(check(1, 0))
+B
+A = matrix(c(4, -1, 1, 2, 2, 1, 5, -2, 4, 2), 5, 2, byrow = T)#
+A
+c = matrix(c(1, 1))
+c
+l = t(c)*A[B,]
+A[B,]
+t(c)
+l = t(c)%*%A[B,]
+l
+l = t(c)%*%solve(A[B,])#
+l
+50^2
+50^2é()
+25^é
+25^2
+625/5
+x = c(2, -3, 3, 91)#
+y = c(29, 41, 91, 1)#
+#
+solve(x)
+plot(x, y)
+x = c(2, -3, 3, 91)#
+y = c(29, -41, 91, 1)#
+#
+plot(x, y)#
+solve(diag(x))
+diag(y)%*%solve(diag(x))
+delta = 64^2 - 4*12*60#
+delta
+sqrt(delta)
+delta/4
+delta/9
+delta/19
+64/24
+11*58
+25*58
+x = seq(0, 6)
+plot(x, cos(x))
+x = seq(-6, 6, len = 100)
+plot(x, cos(x), type = 'l')
+abline(v=0, h=0)
+lines(x, I(2*x + sin(x)*cos(x)), col = blue, type = 'l')
+lines(x, I(2*x + sin(x)*cos(x)), col = "blue", type = 'l')
+Dist <- function(x, y){#
+	return (x^2 + y^2)#
+}#
+#
+x = seq(-2, 2)#
+Dist(x, cos(x))
+x = seq(-2, 2, len = 100)#
+Dist(x, cos(x))
+x[43]
+x[44]
+d = Dist(x, cos(x))
+plot(x, d)
+x = seq(-1, 1, len = 100)#
+d = Dist(x, cos(x))#
+x[44]#
+plot(x, d)
+x = seq(-0.5, 0.5, len = 100)#
+d = Dist(x, cos(x))#
+x[44]#
+plot(x, d)
+Dist <- function(x, y){#
+	return (x^2 + y^2)#
+}#
+#
+x = seq(-0.05, 0.05, len = 100)#
+d = Dist(x, cos(x))#
+x[44]#
+plot(x, d)
+Dist(0, cos(0))
+Dist <- function(x, y){#
+	return (x^2 + y^2)#
+}#
+#
+x = seq(-0.01, 0.01, len = 100)#
+d = Dist(x, cos(x))#
+x[44]#
+plot(x, d)#
+Dist(0, cos(0))
+Dist <- function(x, y){#
+	return (x^2 + y^2)#
+}#
+#
+x = seq(-0.001, 0.001, len = 100)#
+d = Dist(x, cos(x))#
+x[44]#
+plot(x, d)#
+Dist(0, cos(0))
+3.75/2
+3.75/2+2.75
+3.5+1/2*4.5
+8/3+1/3*sqrt(19)
+8/3-1/3*sqrt(19)
+19+0.4*(-0.5)
+18.8 + 0.4*(-0.1)
+18.76 + 0.4*(-0.1)
+50^3
+??var_selection
+x = seq(2, 20, by = 2)
+x
+sum(x)
+20*21
+x = seq(1, 20)
+sum(x)
+sum(2*x)
+x
+2*x
+10*11
+33*34/2
+30*9
+24*6
+13^2*(14^2)/2
+13^2*(14^2)/4
+sumSq <- function(n){#
+	return(n*(n+1)*(2*n+1)/6)#
+}#
+#
+sumCub <- function(n){#
+	return((n*(n+1)/2)^2)#
+}
+sumSq(25)
+sumCub(36)
+sumN <- function(n){#
+	return(n*(n+1)/2)#
+}
+sumN(10)
+-29+8*sumN(29)+2*sumSq(29)
+15*8-15*sumN(15)-9*sumSq(15)
+15*8-5*sumN(15)-9*sumSq(15)
+x0 = 5#
+xn = 18#
+iter = 3
+seq(x0, xn, len = iter)
+reySum <- function(f, x0, xn, iter){#
+	x = seq(x0, xn, len = iter)#
+	out = 0#
+	for(i in 2:length(x)){#
+		out = out + f((x[i-1]+x[i])/2)*(x[i] - x[i-1])#
+	}#
+}
+f <- function(x){return(-9*x^2+9*x+9)}#
+#
+reySum(f, 5, 18, 3)
+reySum <- function(f, x0, xn, iter){#
+	x = seq(x0, xn, len = iter)#
+	out = 0#
+	for(i in 2:length(x)){#
+		out = out + f((x[i-1]+x[i])/2)*(x[i] - x[i-1])#
+	}#
+	return(out)#
+}
+f <- function(x){return(-9*x^2+9*x+9)}#
+reySum(f, 5, 18, 3)
+x = seq(3, 20, len = 100)
+plot(x, f(x))
+-64935/8
+reySumL <- function(f, x0, xn, iter){#
+	x = seq(x0, xn, len = iter)#
+	out = 0#
+	for(i in 2:length(x)){#
+		out = out + f(x[i-1])*(x[i] - x[i-1])#
+		}#
+	return(out)#
+}#
+reySumR <- function(f, x0, xn, iter){#
+	x = seq(x0, xn, len = iter)#
+	out = 0#
+	for(i in 2:length(x)){#
+		out = out + f(x[i])*(x[i] - x[i-1])#
+		}#
+	return(out)#
+}#
+reySumMid <- function(f, x0, xn, iter){#
+	x = seq(x0, xn, len = iter)#
+	out = 0#
+	for(i in 2:length(x)){#
+		out = out + f((x[i-1]+x[i])/2)*(x[i] - x[i-1])#
+		}#
+	return(out)#
+}
+reySumL(f, 5, 18, 3)#
+reySumMid(f, 5, 18, 3)#
+reySumR(f, 5, 18, 3)
+reySumL <- function(f, x0, xn, iter){#
+	x = seq(x0, xn, len = iter+1)#
+	out = 0#
+	for(i in 2:length(x)){#
+		out = out + f(x[i-1])*(x[i] - x[i-1])#
+		}#
+	return(out)#
+}#
+reySumR <- function(f, x0, xn, iter){#
+	x = seq(x0, xn, len = iter+1)#
+	out = 0#
+	for(i in 2:length(x)){#
+		out = out + f(x[i])*(x[i] - x[i-1])#
+		}#
+	return(out)#
+}#
+reySumMid <- function(f, x0, xn, iter){#
+	x = seq(x0, xn, len = iter+1)#
+	out = 0#
+	for(i in 2:length(x)){#
+		out = out + f((x[i-1]+x[i])/2)*(x[i] - x[i-1])#
+		}#
+	return(out)#
+}
+f <- function(x){return(-5*x^2+5*x+1)}#
+x0 = 10; xn = 18, iter = 4#
+#
+x = seq(x0-10, xn+10, len = 100)#
+plot(x, f(x))#
+reySumL(f, x0, xn, iter)#
+reySumMid(f, x0, xn, iter)#
+reySumR(f, x0, xn, iter)
+f <- function(x){return(-5*x^2+5*x+1)}#
+x0 = 10; xn = 18; iter = 4#
+#
+x = seq(x0-10, xn+10, len = 100)#
+plot(x, f(x))#
+reySumL(f, x0, xn, iter)#
+reySumMid(f, x0, xn, iter)#
+reySumR(f, x0, xn, iter)
+f <- function(x){return(x^2 - 4*x - 8)}#
+x0 = 3; xn = 10; iter = 3#
+#
+x = seq(x0-10, xn+10, len = 100)#
+plot(x, f(x))#
+reySumL(f, x0, xn, iter)#
+reySumMid(f, x0, xn, iter)#
+reySumR(f, x0, xn, iter)
+?polygon
+plot(x, f(x), type = 'l')
+polygon(x = c(x0, xn), y = c(f(x0), f(xn)))
+polygon(x = c(x0, x0, xn, xn), y = c(0, f(x0), 0, f(xn)))
+plot(x, f(x), type = 'l')
+polygon(x = c(x0, x0, xn, xn), y = c(0, f(x0), 0, f(xn)))
+plot(x, f(x), type = 'l')
+polygon(x = c(x0, xn, x0, xn), y = c(0, f(x0), 0, f(xn)))
+plot(x, f(x), type = 'l')
+polygon(x = c(x0, x0, xn, xn), y = c(0, f(x0), f(xn), 0))
+abline(h = 0, col = 'grey')
+polygon(x = seq(x0, xn, len = 10), y = f(seq(x0, xn, len = 10)), col = 'blue')
+plot(x, f(x), type = 'l')
+abline(h = 0, col = 'grey')
+polygon(x = c(x0, x0, xn, xn), y = c(0, f(x0), f(xn), 0), col = 'blue')
+plot(x, f(x), type = 'l')
+polygon(x = c(x0, x0, xn, xn), y = c(0, f(x0), f(x0), 0), col = 'blue')
+plot(x, f(x), type = 'l')
+polygon(x = c(x0, seq(x0, xn, len = 10), xn), y = c(f(x0), f(seq(x0, xn, len = 10)),f(x0)), col = 'blue')
+polygon(x = c(x0, seq(x0, xn, len = 10), xn), y = c(f(x0), f(seq(x0, xn, len = 10)), f(x0)), col = 'steelblue')
+polygon(x = c(x0, seq(x0, xn, len = 10), xn), y = c(f(x0), f(seq(x0, xn, len = 10)), f(x0)), col = 'steelblue1')
+polygon(x = c(x0, seq(x0, xn, len = 10), xn), y = c(f(x0), f(seq(x0, xn, len = 10)), f(x0)), col = 'steelblue2')
+reySumL(f, x0, xn, iter)
+f <- function(x){return(6*x^2 - 9*x - 9)}#
+x0 = 10; xn = 19; iter = 3#
+#
+x = seq(x0-10, xn+10, len = 100)#
+plot(x, f(x), type = 'l')#
+polygon(x = c(x0, seq(x0, xn, len = 10), xn), y = c(f(x0), f(seq(x0, xn, len = 10)), f(x0)), col = 'steelblue2')#
+reySumL(f, x0, xn, iter)#
+reySumMid(f, x0, xn, iter)#
+reySumR(f, x0, xn, iter)
+f <- function(x){return(6*x^2 + 9*x - 9)}#
+x0 = 10; xn = 19; iter = 3#
+#
+x = seq(x0-10, xn+10, len = 100)#
+plot(x, f(x), type = 'l')#
+polygon(x = c(x0, seq(x0, xn, len = 10), xn), y = c(f(x0), f(seq(x0, xn, len = 10)), f(x0)), col = 'steelblue2')#
+reySumL(f, x0, xn, iter)#
+reySumMid(f, x0, xn, iter)#
+reySumR(f, x0, xn, iter)
+4*17^2-14 - (4*49 - 14)
+4*17^2-34 - (4*49 - 14)
+13*65
+130+845/2
+65+845/2
+33*8
+8*16
+-264-128
+15^2
+473*6
+3*366
+-2838-1098-144
+72*2
+1098+216
+3*72
+0.24 - 0.08*0.24
+log(26) - log(9)
+tan(-0.1) - tan(-0.3)
+exp(22) - exp(5)
+3*5050
+x = seq(0, 2*pi, len = 100)
+plot(x, I(x*sin(x)), type = 'l')
+80 + 75/90*40 + 85/90*40
+151/160
+?cor.test
+?cor
+sin(24)-sin(6)
+6^3
+25^2
+216/3
+625/3
+-8*72+5*36
+-8*72+5*36-130
+8*625
+526*3
+5000-1578
+3422/3
+5000/3
+-8/3*6^3+4*6^2+36-(-8/3*5^3+4*5^2+30)
+4/3*(-1)^3-(-1)^2-4-(4/3*(-2)^3-(-2)^2-8)
+10^3-4*10^2-80-(5^3-4*5^2-40)
+-1/5*cos(38)+1/5*cos(33)
+f <- function(x){#
+	return(sin(5*x+3))#
+}#
+#
+x <- seq(5, 8, len = 100)#
+plot(x, f(x))
+x <- seq(5.5, 7.5, len = 100)#
+plot(x, f(x), type = 'l')
+1/15*38^3-1/15*28^3
+1/15*(22)^(3/2)-1/15*(17)^(3/2)
+1/5*log(22)-1/5*log(17)
+1/2*exp(12)-1/2*exp(8)
+15^8-4^8
+1/20*sin(20)-1/5*sin(5)
+f1 <- function(x){#
+	return(2*x^2)#
+}#
+f2 <- function(x){#
+	return(1+x^2)#
+}#
+#
+x <- seq(-2, 2, len = 100)#
+plot(x, f1(x), type = 'l')#
+lines(x, f2(x), type = 'l')
+plot(x, f1(x), type = 'l', col = 'red')#
+lines(x, f2(x), type = 'l', col = 'blue')
+asin(0)
+acos(1/2)
+pi/3
+asin(pi/3)
+asin(1.04)
+f3 <- function(x){#
+	return(-1/3*x^3+16*x+1/3*pi-16*pi^3)#
+}#
+#
+seq(pi, 5, len = 100)#
+plot(x, f3(x), type = 'l')
+x <- seq(pi, 5, len = 100)#
+plot(x, f3(x), type = 'l')
+cos(pi/3)
+source('/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/fromSynapse/fromSynapse.R')
+setwd("/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/fromSynapse/RData/")#
+load(file='syn1725770.RData')
+object5
+getProfile(object5)

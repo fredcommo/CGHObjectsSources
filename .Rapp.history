@@ -1,0 +1,663 @@
+2*log(é)
+2*log(2)
+sqrt(log(2))
+f <- function(m){return(-1/(2*0.05^2)*log(0.03/(2*m)))}#
+#
+f(1, 10, 100)
+f(c(1, 10, 100))
+f <- function(m){return(1/(2*0.05^2)*log((2*m)/0.03))}#
+#
+f(c(1, 10, 100))
+24*8/18
+33*3600/5280
+4.32/18
+3.36/4.32*18
+24*4.32/18
+8/5
+2.82/1.76
+50/1.76
+x <- rnorm(1000, 2, 2)#
+y <- rnorm(1500, 4, 3)
+X1 <- c(x, y)#
+X1s <- scale(X1)#
+#
+X2 <- c(scale(x), sclae(y))
+X2 <- c(scale(x), scale(y))
+mean(X1)
+mean(X1s)
+sd(X1s)
+mean(X2)
+sd(X2)
+atan(3)
+f <- function(x){#
+	return(atan(sin(x)))#
+}#
+g <- function(x){#
+	return(5*x^2+7*x+10)#
+}#
+x <- seq(6, 13, len = 100)#
+plot(x, f(x), col = 'blue')#
+lines(x, g(x), col = 'red')#
+abline(v = c(7, 12))
+plot(x, f(x), ylim = range(c(f(x), g(x))), col = 'blue')
+lines(x, g(x), col = 'red')
+abline(v = c(7, 12))
+f <- function(x){#
+	return(atan(sin(x)))#
+}#
+g <- function(x){#
+	return(sqrt(10+sin(x)))#
+}#
+x <- seq(6, 13, len = 100)#
+plot(x, f(x), ylim = range(c(f(x), g(x))), col = 'blue')#
+lines(x, g(x), col = 'red')#
+abline(v = c(7, 12))
+f <- function(x){#
+	return(5*x+9)#
+}#
+g <- function(x){#
+	return(sqrt(10+atan(x)))#
+}#
+x <- seq(6, 13, len = 100)#
+plot(x, f(x), ylim = range(c(f(x), g(x))), col = 'blue')#
+lines(x, g(x), col = 'red')#
+abline(v = c(7, 12))
+f <- function(x){#
+	return(3*x^2+10*x+10)#
+}#
+g <- function(x){#
+	return(atan(x^4))#
+}#
+x <- seq(0, 5, len = 100)#
+plot(x, f(x), ylim = range(c(f(x), g(x))), col = 'blue')#
+lines(x, g(x), col = 'red')#
+abline(v = c(1, 4))#
+abline(v = -1, lwd = 3)
+x <- seq(-2, 5, len = 100)#
+plot(x, f(x), ylim = range(c(f(x), g(x))), col = 'blue')#
+lines(x, g(x), col = 'red')#
+abline(v = c(1, 4))#
+abline(v = -1, lwd = 3)
+f <- function(x){#
+	return(8*x^2+10*x+4)#
+}#
+g <- function(x){#
+	return(atan(x^4))#
+}#
+x <- seq(-3, 8, len = 100)#
+plot(x, f(x), col = 'blue')#
+abline(v = c(4, 7))#
+abline(v = -2, lwd = 3)
+f <- function(x){#
+	return(sqrt(10+cos(x)))#
+}#
+g <- function(x){#
+	return(atan(x^4))#
+}#
+x <- seq(4, 8, len = 100)#
+plot(x, f(x), col = 'blue')#
+abline(v = c(5, 7))
+f <- function(x){#
+	return(sin(cos(x)))#
+}#
+g <- function(x){#
+	return(atan(x^4))#
+}#
+x <- seq(0, 5, len = 100)#
+plot(x, f(x), col = 'blue')#
+abline(v = c(1, 4))#
+abline(h = -1)
+f <- function(x){#
+	return(sin(cos(x)))#
+}#
+g <- function(x){#
+	return(atan(x^4))#
+}#
+x <- seq(0, 5, len = 100)#
+plot(x, f(x), col = 'blue', xlim = range(-2, max(f(x))))#
+abline(v = c(1, 4))#
+abline(h = -1)
+f <- function(x){#
+	return(sin(cos(x)))#
+}#
+g <- function(x){#
+	return(atan(x^4))#
+}#
+x <- seq(0, 5, len = 100)#
+plot(x, f(x), col = 'blue', ylim = range(-2, max(f(x))))#
+abline(v = c(1, 4))#
+abline(h = -1)
+f <- function(x){#
+	return(sin(cos(x)))#
+}#
+g <- function(x){#
+	return(atan(x^4))#
+}#
+x <- seq(0, 5, len = 100)#
+plot(x, f(x), col = 'blue', ylim = range(-2, max(f(x))))#
+abline(v = c(1, 4))#
+abline(h = c(0,-1))
+f <- function(x){#
+	return(sin(cos(x)))#
+}#
+g <- function(x){#
+	return(atan(x^4))#
+}#
+x <- seq(0, 5, len = 100)#
+plot(x, f(x), col = 'blue', ylim = range(-2, max(f(x))))#
+abline(v = c(1, 4))#
+abline(h = -1)
+f <- function(x){#
+	return(sqrt(10+cos(x)))#
+}#
+g <- function(x){#
+	return(7*x^2+5*x+3)#
+}#
+x <- seq(0, 6, len = 100)#
+plot(x, f(x), col = 'blue', ylim = range(-5, max(f(x))))#
+abline(v = c(1, 5))#
+abline(h = -4)
+f <- function(x){#
+	return(sqrt(10+cos(x)))#
+}#
+g <- function(x){#
+	return(7*x^2+5*x+3)#
+}#
+x <- seq(0, 6, len = 100)#
+plot(x, f(x), col = 'blue', ylim = range(-5, max(c(f(x),g(x))))#
+lines(x, g(x), col = 'red')#
+abline(v = c(1, 5))#
+abline(h = -4)
+plot(x, f(x), col = 'blue', ylim = range(-5, max(c(f(x),g(x)))))
+lines(x, g(x), col = 'red')
+x <- seq(0, 6, len = 100)#
+plot(x, f(x), col = 'blue', ylim = range(-5, max(c(f(x),g(x)))))#
+lines(x, g(x), col = 'red')#
+abline(v = c(1, 5))#
+abline(h = -4)
+f <- function(x){#
+	return(atan(sqrt(10+x)))#
+}#
+#
+x <- seq(2, 6, len = 100)#
+plot(x, f(x), col = 'blue')#
+abline(v = c(3, 5))#
+abline(v = 0, lwd = 3)
+f <- function(x){#
+	return(sqrt(10 + atan(x)))#
+}#
+#
+x <- seq(9, 13, len = 100)#
+plot(x, f(x), ylim = range(-6, max(f(x))), col = 'blue')#
+abline(v = c(10, 12))#
+abline(h = -5, lwd = 3)
+f <- function(x){#
+	return(atan(sin(x)))#
+}#
+g <- function(x){#
+	return(4*x + 9)#
+}#
+#
+x <- seq(2, 7, len = 100)#
+plot(x, f(x), ylim = range(-1, max(f(x))), col = 'blue')#
+abline(v = c(3, 6))#
+abline(h = 0, lwd = 3)
+f <- function(x){#
+	return(atan(sin(x)))#
+}#
+g <- function(x){#
+	return(4*x + 9)#
+}#
+#
+x <- seq(2, 7, len = 100)#
+plot(x, f(x), ylim = range(c(f(x), g(x))), col = 'blue')#
+lines(x, g(x), col = 'red')#
+abline(v = c(3, 6))#
+abline(h = 0, lwd = 3)
+f <- function(x){#
+	return(atan(sin(x)))#
+}#
+g <- function(x){#
+	return(4*x + 9)#
+}#
+#
+x <- seq(2, 7, len = 100)#
+plot(x, f(x), ylim = range(c(f(x), g(x))), col = 'blue')#
+lines(x, g(x), col = 'red')#
+abline(v = c(3, 6))#
+abline(v = 0, lwd = 3)
+f <- function(x){#
+	return(atan(sin(x)))#
+}#
+g <- function(x){#
+	return(4*x + 9)#
+}#
+#
+x <- seq(2, 7, len = 100)#
+plot(x, f(x), xlim = range(-1, max(x)), ylim = range(c(f(x), g(x))), col = 'blue')#
+lines(x, g(x), col = 'red')#
+abline(v = c(3, 6))#
+abline(v = 0, lwd = 3)
+f <- function(x){#
+	return(atan(sin(x)))#
+}#
+g <- function(x){#
+	return(cos(sqrt(10+x)))#
+}#
+#
+x <- seq(8, 13, len = 100)#
+plot(x, f(x), xlim = range(-1, max(x)), ylim = range(c(f(x), g(x))), col = 'blue')#
+lines(x, g(x), col = 'red')#
+abline(v = c(9, 12))#
+abline(v = 0, lwd = 3)
+f <- function(x){#
+	return(2*x^2 + 10*x + 5)#
+}#
+#
+x <- seq(3, 10, len = 100)#
+plot(x, f(x), col = 'blue', xlim = range(-2, max(x)))#
+abline(v = c(4, 9))#
+abline(v = -1, lwd = 3)
+f <- function(x){#
+	return(sqrt(10+atan(x)))#
+}#
+#
+x <- seq(6, 9, len = 100)#
+plot(x, f(x), col = 'blue')#
+abline(v = c(7, 8))
+4*4^2-15*4-4
+f <- function(x){#
+	return(6*x^2+6*x-36)#
+}#
+x <- seq(-5, 4, len = 100)#
+plot(x, f(x))
+f <- function(x){#
+	return(2*x^3+3*x^2-36*x-14)#
+}#
+x <- seq(-5, 4, len = 100)#
+plot(x, f(x))
+128/2
+64^(1/3)
+128/16
+1/10*1024^(-9/10)
+2+16*1/10*1024^(-9/10)
+1040^(1/10)
+1040^(9/10)
+1040^(9/10)*5
+2596/2
+2596/4
+2596/8
+1024^(9/10)
+512/2
+512/4
+512/8
+512/8*5
+f <- function(x){#
+	return(x^2)#
+}#
+g <- function(x){#
+	return(x+2)#
+}#
+#
+x <- seq(-2, 3, len = 100)#
+plot(x, f(x), ylim = range(c(f(x), g(x))), col = 'blue')#
+lines(x, g(x), col = 'red')
+f <- function(x){#
+	return(1-x^2)#
+}#
+#
+x <- seq(-1, 3, len = 100)#
+plot(x, f(x))
+abline(h = 0, lwd = 3)
+x <- rnorm(100)
+mean(x-3)
+x <- rnorm(1000, 3, 2)
+y <- ((x - mean(x))/sd(x))/sd(x)
+plot(density(y))
+sd(y)
+sd(x)
+x <- rnorm(1000)
+y <- ((x - mean(x))/sd(x))/sd(x)
+sd(y)
+x <- rnorm(1000)
+y <- rnorm(1000)
+mean(x*y)
+var(x*y)
+x <- rnorm(1000, 5, 1)
+mean(x - 2)
+plot(density(x))
+x <- c(x, -x)
+plot(density(x))
+mean(x)
+x <- rnorm(1000, 3)
+x <- c(x, -x)
+plot(density(x))
+x <- rnorm(1000, 3)
+x <- c(x-2, -x+2)
+plot(density(x))
+mean(x)
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')#
+#
+# Analysis workflow#
+object1 <- buildCGHObj.v01()#
+object2 <- adjustSignal(object1)#
+object3 <- EMnormalize(object2)#
+object4 <- SegmentCGH(object3)#
+object5 <- createProfile(object4)
+getProfile(object5)
+args(SegmentCGH)
+Analysis workflow#
+object1 <- buildCGHObj.v01()#
+object2 <- adjustSignal(object1)#
+object3 <- EMnormalize(object2)#
+object4 <- SegmentCGH(object3, UndoSD = 1)#
+object5 <- createProfile(object4)
+getProfile(object5)
+object4 <- SegmentCGH(object3, UndoSD = 1.5)#
+object5 <- createProfile(object4)#
+getProfile(object5)
+getProfile(object5, ylim = range(-1, 1))
+object4 <- SegmentCGH(object3, UndoSD = 2)#
+object5 <- createProfile(object4)#
+getProfile(object5, ylim = range(-1, 1))
+getProfile(object5, ylim = range(-1.5, 1.5))
+tagMyGene(object5, 'ERBB2')										# Add a specified gene
+tagMyGene(object5, ylim = range(-1.5, 1.5), 'ERBB2')										# Add a specified gene
+tagMyGene(object5, 'ERBB2')										# Add a specified gene
+tagMyGene(object5, geneList)										# Add a specified gene
+geneList = c("CCND1", "ALK", "MDM2", "FRS2", "MET", "RPTOR", "ESR1", "PGR", "FGFR1", "FGFR2",#
+					"MYC", "FGF4", "FGF9", "EGFR", "ERBB2", "TOP2A", "IGF1", "IGF1R", "BRCA1", "BRCA2",#
+					"NOTCH4", "VEGFA", "PTEN", "PIK3CB", "PAK1")
+tagMyGene(object5, geneList)										# Add a specified gene
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+tagMyGene(object5, geneList)										# Add a specified gene
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+tagMyGene(object5, geneList)										# Add a specified gene
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+tagMyGene(object5, 'ERCC1')										# Add a specified gene
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+tagMyGene(object5, 'ERCC1')										# Add a specified gene
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+tagMyGene(object5, 'ERCC1')										# Add a specified gene
+tagMyGene(object5, c('EGFR', 'ERCC1'))										# Add a specified gene
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+tagMyGene(object5, c('EGFR', 'ERCC1'))										# Add a specified gene
+tagMyGene(object5, 'ERCC1')										# Add a specified gene
+tagMyGene(object5, c('EGFR','ERCC1'))										# Add a specified gene
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+tagMyGene(object5, c('EGFR','ERCC1'))										# Add a specified gene
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+tagMyGene(object5, c('EGFR','ERCC1'))										# Add a specified gene
+tag <- c('EGFR','ERCC1')
+arrayInfoPath = '/Users/fredcommo/Documents/Projet Safir/Arrays Infos/'#
+		geneDB <- readRDS(paste0(arrayInfoPath, 'myGeneDB.rds'))
+tmp <- geneDB[which(geneDB$NomenclatureSymbol %in% tag),]
+tmp
+LR <- lapply(1:nrow(tmp), function(i){#
+					startAt <- tmp$genomicStart[i]#
+					stopAt <- tmp$genomicStop[i]#
+					segTable$seg.med[which(segTable$loc.start<= startAt & segTable$loc.end >= stopAt)]#
+					})#
+		LR <- do.call(c, LR)
+segTable = getSegTable(object5)
+LR <- lapply(1:nrow(tmp), function(i){#
+					startAt <- tmp$genomicStart[i]#
+					stopAt <- tmp$genomicStop[i]#
+					segTable$seg.med[which(segTable$loc.start<= startAt & segTable$loc.end >= stopAt)]#
+					})#
+		LR <- do.call(c, LR)
+LR
+Col <- ifelse(LR<= loss, 'red3', ifelse(LR>= gain, 'dodgerblue2', 'black'))
+gain = log2(2.25/2)
+loss = log2(1.80/2)
+Col <- ifelse(LR<= loss, 'red3', ifelse(LR>= gain, 'dodgerblue2', 'black'))
+dat <- data.frame(xstart = c(tmp$genomicStart-2.5e7, tmp$genomicStart),#
+								xend = c(tmp$genomicStart, tmp$genomicStart),#
+								ystart = c(rep(1, length(LR)), rep(1, length(LR))),#
+								yend = c(rep(1, length(LR)), LR),#
+								Col = rep(Col, each = 2))
+dat
+head(geneDB)
+LR
+Col
+dat <- data.frame(xstart = c(tmp$genomicStart-2.5e7, tmp$genomicStart),#
+								xend = c(tmp$genomicStart, tmp$genomicStart),#
+								ystart = c(rep(1, length(LR)), rep(1, length(LR))),#
+								yend = c(rep(1, length(LR)), LR),#
+								Col = rep(Col, 2))
+dat
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+tagMyGene(object5, c('EGFR','ERCC1'))										# Add a specified gene
+dat
+tmp$NomenclatureSymbol
+paste0(tmp$NomenclatureSymbol, '\n(Log2R = ', round(LR, 3), ')')
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+tagMyGene(object5, c('EGFR','ERCC1'))										# Add a specified gene
+log2(1.80/2)
+LR
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+tagMyGene(object5, c('EGFR','ERCC1'))										# Add a specified gene
+head(tmp)
+head(segTable)
+arrayInfoPath = '/Users/fredcommo/Documents/Projet Safir/Arrays Infos/'#
+		geneDB <- readRDS(paste0(arrayInfoPath, 'myGeneDB.rds'))
+valid <- grepl(tag, geneDB$NomenclatureSymbol)
+tag
+valid <- is.element(tag, geneDB$NomenclatureSymbol)
+valid
+if(any(!valid)) cat('Not a valid gene symbol:\t', tag[!valid], '\n')
+tmp <- geneDB[which(geneDB$NomenclatureSymbol %in% tag),]
+tmp
+segTable = getSegTable(object5)
+gPlot <- getProfile(object5)
+LR <- lapply(1:nrow(tmp), function(i){#
+					startAt <- tmp$genomicStart[i]#
+					stopAt <- tmp$genomicStop[i]#
+					segTable$seg.med[which(segTable$loc.start<= startAt & segTable$loc.end >= stopAt)]#
+					})#
+		LR <- do.call(c, LR)
+LR
+Col <- ifelse(LR<= loss, 'red3', ifelse(LR>= gain, 'dodgerblue2', 'black'))
+Col
+dat <- data.frame(xstart = c(tmp$genomicStart-2.5e7, tmp$genomicStart),#
+								xend = c(tmp$genomicStart, tmp$genomicStart),#
+								ystart = c(rep(1, length(LR)), rep(1, length(LR))),#
+								yend = c(rep(1, length(LR)), LR),#
+								Col = rep(Col, 2))
+dat
+gPlot +#
+		coord_cartesian(ylim = ylim)+#
+		annotate("text", x = tmp$genomicStart - 2.2e8, y = rep(1, length(LR)),#
+						label = paste0(tmp$NomenclatureSymbol, '\n(Log2R = ', round(LR, 3), ')'), cex = 5) +#
+		geom_segment(data = dat, aes(x = xstart, y = ystart, xend = xend, yend = yend), colour = dat$Col, size = 0.75)
+ylim = range(-1.5, 1.5)
+gPlot +#
+		coord_cartesian(ylim = ylim)+#
+		annotate("text", x = tmp$genomicStart - 2.2e8, y = rep(1, length(LR)),#
+						label = paste0(tmp$NomenclatureSymbol, '\n(Log2R = ', round(LR, 3), ')'), cex = 5) +#
+		geom_segment(data = dat, aes(x = xstart, y = ystart, xend = xend, yend = yend), colour = dat$Col, size = 0.75)
+dat$Col
+gPlot +#
+		coord_cartesian(ylim = ylim)+#
+		annotate("text", x = tmp$genomicStart - 2.2e8, y = rep(1, length(LR)),#
+						label = paste0(tmp$NomenclatureSymbol, '\n(Log2R = ', round(LR, 3), ')'), cex = 5) +#
+		geom_segment(data = dat, aes(x = xstart, y = ystart, xend = xend, yend = yend), colour = as.character(dat$Col), size = 0.75)
+tagMyGene(object5, c('EGFR','ERCC1'))										# Add a specified gene
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+tagMyGene(object5, c('EGFR','ERCC1'))										# Add a specified gene
+dat <- data.frame(xstart = c(tmp$genomicStart-2.5e7, tmp$genomicStart),#
+								xend = c(tmp$genomicStart, tmp$genomicStart),#
+								#ystart = c(rep(1, length(LR)), rep(1, length(LR))),#
+								#yend = c(rep(1, length(LR)), LR),#
+								ystart = c(LR/abs(LR), LR/abs(LR)),#
+								yend = c(LR/abs(LR), LR),#
+								Col = rep(Col, 2))
+dat
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+tagMyGene(object5, c('EGFR','ERCC1'))										# Add a specified gene
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+tagMyGene(object5, c('EGFR','ERCC1'))										# Add a specified gene
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+tagMyGene(object5, c('EGFR','ERCC1'))										# Add a specified gene
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+tagMyGene(object5, c('EGFR','ERCC1'))										# Add a specified gene
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+tagMyGene(object5, c('EGFR','ERCC1'))										# Add a specified gene
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+tagMyGene(object5, c('EGFR','ERCC1'))										# Add a specified gene
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+tagMyGene(object5, c('EGFR','ERCC1'))										# Add a specified gene
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+getDensity(object5)
+getProfile(object5)
+object5 <- createProfile(object4)#
+getProfile(object5)
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+object5 <- createProfile(object4)#
+getProfile(object5)
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+object5 <- createProfile(object4)#
+getProfile(object5)
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+object5 <- createProfile(object4)#
+getProfile(object5)
+getProfile(object5, ylim = range(-1.5, 1.5))					# the genomic profile
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+getProfile(object5, ylim = range(-1.5, 1.5))					# the genomic profile
+object5 <- createProfile(object4)#
+getProfile(object5, ylim = range(-1.5, 1.5))					# the genomic profile
+tagMyGene(object5, c("PIK3CB",'EGFR','ERCC1'))							# Add a specified gene
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+getProfile(object5, ylim = range(-1.5, 1.5))					# the genomic profile
+object5 <- createProfile(object4)#
+getProfile(object5, ylim = range(-1.5, 1.5))					# the genomic profile
+cnSet <- getCNset(object5)
+head(cnSet)
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+object5 <- createProfile(object4)#
+getProfile(object5, ylim = range(-1.5, 1.5))					# the genomic profile
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+object5 <- createProfile(object4)#
+getProfile(object5, ylim = range(-1.5, 1.5))					# the genomic profile
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+object5 <- createProfile(object4)#
+getProfile(object5, ylim = range(-1.5, 1.5))					# the genomic profile
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+object5 <- createProfile(object4)#
+getProfile(object5, ylim = range(-1.5, 1.5))					# the genomic profile
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+object5 <- createProfile(object4)#
+getProfile(object5, ylim = range(-1.5, 1.5))					# the genomic profile
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+object5 <- createProfile(object4)
+getProfile(object5, ylim = range(-1.5, 1.5))					# the genomic profile
+rm(object5)
+object5 <- createProfile(object4)
+getProfile(object5, ylim = range(-1.5, 1.5))					# the genomic profile
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+object5 <- createProfile(object4)#
+getProfile(object5, ylim = range(-1.5, 1.5))					# the genomic profile
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')
+object5 <- createProfile(object4)#
+getProfile(object5, ylim = range(-1.5, 1.5))					# the genomic profile
