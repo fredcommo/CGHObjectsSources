@@ -1,7 +1,7 @@
 # Define UI for application that plots random distributions 
  shinyUI(
-	#bootstrapPage(	 	
-	pageWithSidebar(
+	bootstrapPage(	 	
+	#pageWithSidebar(
 	
 		# Display the sampleId	
   		headerPanel(getInfo(object5, 'sampleId')),
