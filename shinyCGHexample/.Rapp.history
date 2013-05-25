@@ -1,0 +1,269 @@
+points(newData, pch = 19, cex = 0.2, col = ifelse(classifOut<0, 'blue', 'red3'), cex = 1.5)
+points(newData, pch = 19, col = ifelse(classifOut<0, 'blue', 'red3'), cex = 0.2)
+Scores <- list(iter1 = NULL, iter2 = NULL, err1 = NULL, err2 = NULL)#
+for(trail in 1:1000){#
+	Data <- .buildData(10)#
+	classif <- classify.linear(Data$Data, Data$w, Data$w0)#
+	plot(rbind(Data$x1, Data$x2), pch = 19, xlim = range(-1, 1), ylim = range(-1, 1), asp = 1)#
+	abline(Data$m0, Data$m1)#
+	points(Data$Data, pch = ifelse(classif<0, '-', '+'), col = ifelse(classif<0, 'blue', 'red3'), cex = 1.5)#
+#
+	init <- testLM(Data$Data, classif)#
+	fit <- classify.linear(Data$Data, init[2:3], init[1])#
+	eRate <- sum(fit != classif)/length(classif)#
+	init <- testLM(Data$Data, classif)#
+	arrows(0, 0, init[1], init[2])#
+	score1 <- perceptron(Data$Data, classif, rate = 1)#
+	score2 <- perceptron(Data$Data, classif, w = init[2:3], w0 = init[1], rate = 1)#
+	iter1 <- score1$iter#
+	iter2 <- score2$iter#
+	eRate1 <- score1$eRate#
+	eRate2 <- score2$eRate#
+	Scores$iter1 <- c(Scores$iter1, iter1)#
+	Scores$iter2 <- c(Scores$iter2, iter2)#
+	Scores$err1 <- c(Scores$err1, eRate1)#
+	Scores$err2 <- c(Scores$err2, eRate2)#
+#	Scores$err <- c(Scores$err, err)#
+#	Scores$desagree <- c(Scores$desagree, desag)#
+	cat('Trial:', trail, '\titer1:', iter1, '\terr1:', eRate1 , '\titer2:', iter2, '\terr2:', eRate2, '\n')#
+	}#
+#
+mean(Scores$iter1)#
+mean(Scores$err1)#
+mean(Scores$iter2)#
+mean(Scores$err2)
+Scores <- list(iter1 = NULL, iter2 = NULL, err1 = NULL, err2 = NULL)#
+for(trail in 1:1000){#
+	Data <- .buildData(10)#
+	classif <- classify.linear(Data$Data, Data$w, Data$w0)#
+	plot(rbind(Data$x1, Data$x2), pch = 19, xlim = range(-1, 1), ylim = range(-1, 1), asp = 1)#
+	abline(Data$m0, Data$m1)#
+	points(Data$Data, pch = ifelse(classif<0, '-', '+'), col = ifelse(classif<0, 'blue', 'red3'), cex = 1.5)#
+#
+	init <- testLM(Data$Data, classif)#
+	fit <- classify.linear(Data$Data, init[2:3], init[1])#
+	eRate <- sum(fit != classif)/length(classif)#
+	init <- testLM(Data$Data, classif)#
+	arrows(0, 0, init[1], init[2])#
+	#score1 <- perceptron(Data$Data, classif, rate = 1)#
+	score2 <- perceptron(Data$Data, classif, w = init[2:3], w0 = init[1], rate = 1)#
+	#iter1 <- score1$iter#
+	iter2 <- score2$iter#
+	#eRate1 <- score1$eRate#
+	eRate2 <- score2$eRate#
+	#Scores$iter1 <- c(Scores$iter1, iter1)#
+	Scores$iter2 <- c(Scores$iter2, iter2)#
+	#Scores$err1 <- c(Scores$err1, eRate1)#
+	Scores$err2 <- c(Scores$err2, eRate2)#
+#	Scores$err <- c(Scores$err, err)#
+#	Scores$desagree <- c(Scores$desagree, desag)#
+	#cat('Trial:', trail, '\titer1:', iter1, '\terr1:', eRate1 , '\titer2:', iter2, '\terr2:', eRate2, '\n')#
+	cat('Trial:', trail, '\titer2:', iter2, '\terr2:', eRate2, '\n')#
+	}#
+#
+#mean(Scores$iter1)#
+#mean(Scores$err1)#
+mean(Scores$iter2)#
+mean(Scores$err2)
+sign
+.nlSign <- function(X){#
+	y <- X[,1]^2 + X[,2]^2 - 0.6#
+	return(ifelse(y<0, -1, 1))#
+}#
+#
+.noise <- function(classif, p = 0.1){#
+	Samp <- sample(1:length(classif), ceiling(length(classif)*p))#
+	return(ifelse(classif %in% Samp, classif*(-1), classif))#
+}#
+#
+N = 1000#
+Data <-  matrix(sample(seq(-1, 1, len = 1e5), 2*N), N, 2)#
+classif <- nlSign(X)
+classif <- .nlSign(X)
+classif <- .nlSign(Data)
+classif
+classifNoisy <- .noise(classif)
+table(classif, classifNoisy)
+classifNoisy
+.noise <- function(classif, p = 0.1){#
+	Samp <- sample(1:length(classif), ceiling(length(classif)*p))#
+	classif[Samp] <- classif[Samp]*(-1)#
+}#
+#
+N = 1000#
+Data <-  matrix(sample(seq(-1, 1, len = 1e5), 2*N), N, 2)#
+classif <- .nlSign(Data)#
+classifNoisy <- .noise(classif)#
+table(classif, classifNoisy)
+.noise <- function(classif, p = 0.1){#
+	Samp <- sample(1:length(classif), ceiling(length(classif)*p))#
+	classif[Samp] <- classif[Samp]*(-1)#
+	return(classif)#
+}#
+#
+N = 1000#
+Data <-  matrix(sample(seq(-1, 1, len = 1e5), 2*N), N, 2)#
+classif <- .nlSign(Data)#
+classifNoisy <- .noise(classif)#
+table(classif, classifNoisy)
+init <- testLM(Data, classifNoisy)#
+fitIn <- classify.linear(Data, init[2:3], init[1])#
+Ein <- c(Ein, sum(fitIn != classifNoisy)/length(classifNoisy))#
+Ein
+Ein <- sum(fitIn != classif
+require(synapseClient)
+synapseLogin('frederic.commo@sagebase.org', 'Se@ttle7')
+e <- loadEntity('syn1699886')
+e$files
+e$cacheDir
+file.path(e$cacheDir, e$files)
+q()
+f <- function(choice = c("db1", "db2", "db3")){#
+	select <- match.arg(choice)#
+	switch(select,#
+	db1 = (DB = 'db1'),#
+	db2 = (DB = 'db2'),#
+	db3 = (DB = 'db3')#
+	)#
+	return(DB)#
+}
+f()
+f(choice = 'db2')
+f <- function(choice = c("db1", "db2", "db3")){#
+	select <- match.arg(choice)#
+	switch(select,#
+	db1 = (DB = 'SangerCensus'),#
+	db2 = (DB = 'cbio'),#
+	db3 = (DB = 'vogelstein')#
+	)#
+	return(DB)#
+}
+f()
+1/8
+0.48/.52
+.3/.7
+.3/.7*.48/.52
+ML(seq(0, 1, by = 100), rbinom(10, 1, 0.5))
+ML <- function(theta, X){#
+	output = 1#
+	for(i in 1:lenght(X))#
+		output <- theta^X[i]*(1-theta)^(1-X[i])#
+	return(output)#
+}#
+#
+ML(seq(0, 1, by = 100), rbinom(10, 1, 0.5))
+set.seed(12345)#
+ML(seq(0, 1, by = 100), rbinom(10, 1, 0.5))
+ML <- function(theta, X){#
+	output = 1#
+	for(i in 1:length(X))#
+		output <- theta^X[i]*(1-theta)^(1-X[i])#
+	return(output)#
+}#
+set.seed(12345)#
+ML(seq(0, 1, by = 100), rbinom(10, 1, 0.5))
+rbinom(10, 1, 0.5)
+ML(0.2, rbinom(10, 1, 0.5))
+set.seed(12345)#
+ML(0.2, rbinom(10, 1, 0.5))
+ML(0.2, rbinom(10, 1, 0.5))
+set.seed(12345)#
+ML(0.4, rbinom(10, 1, 0.5))
+set.seed(12345)#
+ML(0.8, rbinom(10, 1, 0.5))
+ML <- function(theta, X){#
+	output = 1#
+	for(i in 1:length(X))#
+		output <- output * theta^X[i]*(1-theta)^(1-X[i])#
+	return(output)#
+}#
+set.seed(12345)#
+ML(0.8, rbinom(10, 1, 0.5))
+set.seed(12345)#
+ML(c(0.2, 0.8), rbinom(10, 1, 0.5))
+set.seed(12345)#
+ML(seq(0, 1, by = 100), rbinom(10, 1, 0.5))
+seq(0, 1, by = 100)
+set.seed(12345)#
+ML(seq(0, 1, len = 100), rbinom(10, 1, 0.5))
+set.seed(12345)#
+theta <- seq(0, 1, len = 100)#
+L <- ML(theta, rbinom(10, 1, 0.5))#
+plot(theta, L)
+plot(theta, L/max(L))
+set.seed(12345)#
+theta <- seq(0, 1, len = 100)#
+L <- ML(theta, rbinom(100, 1, 0.5))#
+plot(theta, L/max(L))
+fact(5)
+fac(5)
+?factoriel
+??factoriel
+??factorial
+fcatorial(5)
+factorial(5)
+ML <- function(theta, X){#
+	output = 1#
+	for(i in 1:length(X))#
+		output = output*(theta^x*exp(-theta)/factorial(x))#
+}#
+#
+theta <- seq(1, 10, len = 100)#
+L <- ML(theta, c(4, 5, 6))#
+plot(theta, L/max(L))
+ML <- function(theta, X){#
+	output = 1#
+	for(i in 1:length(X))#
+		output = output*(theta^X[i]*exp(-theta)/factorial(x[i]))#
+}#
+#
+theta <- seq(1, 10, len = 100)#
+L <- ML(theta, c(4, 5, 6))#
+plot(theta, L/max(L))
+ML <- function(theta, X){#
+	output = 1#
+	for(i in 1:length(X))#
+		output = output*(theta^X[i]*exp(-theta)/factorial(X[i]))#
+}#
+#
+theta <- seq(1, 10, len = 100)#
+L <- ML(theta, c(4, 5, 6))#
+plot(theta, L/max(L))
+theta
+L
+ML(theta, c(4, 5, 6))
+ML <- function(theta, X){#
+	output = 1#
+	for(i in 1:length(X))#
+		output = output*(theta^X[i]*exp(-theta)/factorial(X[i]))#
+	output#
+}#
+#
+theta <- seq(1, 10, len = 100)#
+L <- ML(theta, c(4, 5, 6))#
+plot(theta, L/max(L))
+max(L)
+theta[which.max(L)]
+0.481*.3/.7
+(1-.75)/.52
+((1-.75)*.3)/((1-.75)*.3+.52*.7)
+.75/.48
+(.75*.3)/(.75*.3+(1-.52)*.7)
+4971 - 1574
+1574 + 2900
+6200 - 4474 - 752
+Test Affy workflow#
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"#
+setwd(scriptPath)#
+source('SourceCodeObj.R')#
+#
+# Analysis workflow#
+object1 <- buildCGHObj.v01()#
+object2 <- adjustSignal(object1)#
+object3 <- EMnormalize(object2)#
+object4 <- SegmentCGH(object3, UndoSD = 2)#
+object5 <- createProfile(object4)#
+getProfile(object5, ylim = range(-1.5, 1.5))					# the genomic profile
+require(shiny)#
+shinyPath = '/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/'#
+runApp(paste0(shinyPath, 'shinyAppCGH/'))

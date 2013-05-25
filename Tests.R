@@ -1,6 +1,6 @@
 
 # Test Affy workflow
-scriptPath = "/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/"
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/CGHObjectsSources/"
 setwd(scriptPath)
 source('SourceCodeObj.R')
 
@@ -26,18 +26,36 @@ pdf(file = paste0(path, '/', getInfo(object4, 'sampleId'), '_plot.pdf'), width =
 getProfile(object5, ylim = range(-1.5, 1.5))
 dev.off()
 
-# Save .Rdata
+######### Create a save function here
+# Save .Rdata locally
 cghProfile <- object5
-save(cghProfile, file = paste0(path, '/', getInfo(object5, 'sampleId'), '.RData'))
+save(cghProfile, file = paste0(path, '/', getInfo(cghProfile, 'sampleId'), '.RData'))
 
 # Save in synapse: it works using .rds or .rbin
-fileName <- getInfo(object5, 'sampleId')
-assign(fileName, list(gProfile = getProfile(object5), segTable = getSegTable(object5)))
+fileName <- getInfo(cghProfile, 'sampleId')
+assign(fileName, list(gProfile = getProfile(cghProfile), segTable = getSegTable(cghProfile)))
 save(list = fileName, file = file.path(tempdir(), paste0(fileName, '.rds')))
 
-file <- File(file.path(tempdir(), paste0(fileName, '.rds')), parentId = 'syn1864121')
-file <- synStore(file)
+profileS4 <- File(file.path(tempdir(), paste0(fileName, '.rds')), parentId = 'syn1864121')
+profileS4 <- synStore(profileS4)
 
+# Save a smaller object to be called in shinyApps
+cnSet = getCNset(cghProfile)
+x <- cnSet$genomicPos[cnSet$ChrNum != 24]
+y <- cnSet$Log2Ratio[cnSet$ChrNum != 24]
+Samp <- seq(1, length(y), len = length(y)/40)
+shinyData <- list(gPos = x[Samp],
+                 LR = y[Samp],
+                 segTable = getSegTable(cghProfile),
+                 id = getInfo(cghProfile, 'sampleId'))
+
+save(shinyData, file = file.path(tempdir(), 'shinyData.rbin'))
+shiny <- File(file.path(tempdir(), 'shinyData.rbin'), parentId = 'syn1864121')
+shiny <- synStore(shiny)
+used(shiny)<-list(list(entity = synGet(profileS4), wasExecuted = FALSE))
+shiny <- synStore(shiny)
+
+# Create a function here
 # Generate an save the results table for a given list of genes on interest
 	# create a list of symbols
 geneList = c("CCND1", "ALK", "MDM2", "FRS2", "MET", "RPTOR", "ESR1", "PGR", "FGFR1", "FGFR2",
@@ -53,8 +71,12 @@ buildHtml(geneTable, path, paste0(getInfo(object5, 'sampleId')))
 FullHtml(object5, filePath = path)
 
 require(shiny)
-shinyPath = '/Users/fredcommo/Documents/Projet Safir/Safir R Sources/CGHObjects/'
-runApp(paste0(shinyPath, 'shinyAppCGH/'))
+scriptPath = "/Users/fredcommo/Documents/Projet Safir/CGHObjectsSources/shinyAppsCGH/"
+runApp(paste0(scriptPath, 'shinyAppEx4/'))
+
+# wiki
+# ${iframe?site=http%3A%2F%2Fshiny%2Esynapse%2Eorg%3A3838%2Fusers%2Ffcommo%2FshinyAppEx3%2F&height=1000}
+
 
 
 

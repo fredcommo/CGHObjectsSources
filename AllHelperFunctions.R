@@ -100,7 +100,7 @@ getAnnot <- function(fileName){
 }
 
 ###########################
-
+# In construction
 .computeFract <- function(object){
 	cnSet <- getCNset(object)
 }
