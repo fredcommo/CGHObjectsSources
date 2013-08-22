@@ -1,3 +1,15 @@
+require(synapseClient)
+cgh  <- synGet('syn2121690')
+
+require(synapseClient)
+cgh  <- synGet('syn2121690')
+
+require(synapseClient)
+cgh  <- synGet('syn2121690')
+
+require(synapseClient)
+cgh  <- synGet('syn2121690')
+
 # library(shiny)
 
 ###########################
@@ -46,8 +58,8 @@
        ylim = range(-1.5, 1.5), cex = 0.1, col = 'grey10',
        cex.axis = 1, cex.lab = 1.5, las = 1, mar = c(10, 10, 10, 10), mgp = c(3, 1, 0), cex.main = 1.5,
        xlab = 'Genomic position', ylab = 'Log2Ratio',
-       main = paste(Id, '\nGain threshold:', round(Up, 3), '- Lost threshold:', round(Lo, 3)))
-  lines(gPos, runmed(lr, k = 101))
+       main = paste(synId, '\nGain threshold:', round(Up, 3), '- Lost threshold:', round(Lo, 3)))
+  lines(gPos, runmed(lr, k = 81))
 }
 
 .addSegments <- function(segTable, Up, Lo, lossCol, normCol, gainCol){
@@ -75,8 +87,6 @@
 ###########################
 
 
-require(synapseClient)
-
 # Load annot tables
 e <- synGet('syn1877556')
 HG19 <- read.csv(e@filePath, header = TRUE, sep = '\t')
@@ -85,12 +95,12 @@ geneDB <- readRDS(e@filePath)
 
 # Load data
 cat('\nLoading data...')
-cgh  <- synGet('syn1895708')
-load(cgh@filePath)
+shinyData <- get(load(cgh@filePath))
 segTable = shinyData$segTable
 gPos <- shinyData$gPos
 lr <- shinyData$L2R
-Id <- shinyData$id
+fileName <- shinyData$fileName
+synId <- shinyData$synId
 cat('\n\n')
 
 
@@ -101,7 +111,9 @@ shinyServer(function(input, output) {
   # Plot and table are updated each time a new gene symbol is called.
  	# createPlot is the reactive function called by renderPlot() to generate the main plot.
   # createTable is the reactive function called by renderTable()
-     
+
+  output$Id <- renderText(paste0(gsub('.txt.bz2', '', fileName), ' - ', synId))
+  
  	createPlot <- reactive({
     Up = log2(1.15) # gain = 15%
  	  Lo = log2(0.90)  # lost = 10%

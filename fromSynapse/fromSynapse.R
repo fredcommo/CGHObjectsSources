@@ -1,7 +1,7 @@
 # Load entity function reads in the tab separated files
 buildAgilent <- function(synId){
   # Load cghData from a synapse entity and build an AgilentObject.
-  	entity <- loadEntity(synId)
+  entity <- loadEntity(synId)
 	object <- AgilentObj(info = c(fileName = propertyValue(entity, 'name'), sampleId = propertyValue(entity, 'id'), platform = 'Agilent'))
 	object@info <- c(object@info, .readAgilentInfo(entity))
 	object@cnSet <- .readAgilentMatrix(entity)

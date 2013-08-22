@@ -30,9 +30,13 @@ setGeneric('getProfile', function(object,...) standardGeneric('getProfile'))
 #setMethod('getProfile', 'cghObj', function(object,...) return(object@gProfile))
 setMethod('getProfile', 'cghObj', function(object, ylim = NULL,...) {gPlot <- object@gProfile
 																							if(!is.null(ylim)){
-																								hg19 <- read.csv(paste0(arrayInfoPath, 'human.chrom.info.hg19.FC.txt'),
-																															header = TRUE, sep = '\t')
-																								cumLen = cumsum(as.numeric(hg19$length))
+																							#	hg19 <- read.csv(paste0(arrayInfoPath, 'human.chrom.info.hg19.FC.txt'),
+																							#								header = TRUE, sep = '\t')
+																							  if(!exists('hg19')){
+																							    ent <- synGet('syn2141399')
+																							    hg19 <- read.csv(ent@filePath, header = TRUE, sep = '\t')
+																							  }
+																							  cumLen = cumsum(as.numeric(hg19$length))
 																								cumCentr <- 1/2*cumLen[1]
 																								for(chr in 2:length(cumLen)) cumCentr = c(cumCentr, cumLen[chr-1] + 1/2*hg19$length[chr])
 																								gPlot <- gPlot+
@@ -47,9 +51,12 @@ setGeneric('tagMyGene', function(object,...) standardGeneric('tagMyGene'))
 setMethod('tagMyGene', 'cghObj', function(object, tag = NULL, ylim = range(-1.5, 1.5), gain = log2(2.25/2), loss = log2(1.80/2)){
 	myBlue <- rgb(0, 0.45, 1, 1)
 	if(!'geneDB' %in% ls()){
-		arrayInfoPath = '/Users/fredcommo/Documents/Projet Safir/Arrays Infos/'
-		geneDB <- readRDS(paste0(arrayInfoPath, 'myGeneDB.rds'))
-		}
+# 		arrayInfoPath = '/Users/fredcommo/Documents/Projet_Safir/Arrays_Infos/'
+# 	#	geneDB <- readRDS(paste0(arrayInfoPath, 'myGeneDB.rds'))
+# 		geneDB <- readRDS(paste0(arrayInfoPath, 'myGeneDB_2013_Mar_26.rds'))
+    ent <- synGet('syn2141368')
+    geneDB <- readRDS(ent@filePath)
+	}
 	if(is.null(tag)) gPlot
 	else if(sum(is.element(tag, geneDB$NomenclatureSymbol)) == 0){
 		cat('No valid gene symbol(s)\n')

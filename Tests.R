@@ -70,6 +70,7 @@ path = paste0('./Output/', getInfo(object5, 'sampleId'))
 buildHtml(geneTable, path, paste0(getInfo(object5, 'sampleId')))
 FullHtml(object5, filePath = path)
 
+# Use shiny
 require(shiny)
 scriptPath = "/Users/fredcommo/Documents/Projet Safir/CGHObjectsSources/shinyAppsCGH/"
 runApp(paste0(scriptPath, 'shinyAppEx4/'))

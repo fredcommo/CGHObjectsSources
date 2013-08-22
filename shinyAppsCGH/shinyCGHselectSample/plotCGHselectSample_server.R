@@ -1,8 +1,13 @@
 # library(shiny)
+require(SOAR)
+Remove(shinyData, gPos, l2r, segTable, currentId, currentSample)
+require(synapseClient)
 
 ###########################
 # Helper functions
+
 .locateChr <- function(y, hg19 = HG19){
+  cat('LocateChr\n')
   colText = 'grey40'
   colLines = 'grey80'
   cumLen = cumsum(as.numeric(hg19$length))
@@ -19,6 +24,7 @@
 }
 
 .geneOfInt <- function(segTable, geneList, DB = geneDB){
+  cat('geneOfInt\n')
   output <- lapply(geneList, function(gene){
     gene <- toupper(gene)
     tmp <- DB[which(DB$Symbol == gene),]
@@ -41,16 +47,18 @@
   return(output)
 }
 
-.mainPlot <- function(gPos, lr, Up, Lo){
-  plot(gPos, runmed(lr, k = 11),
-       ylim = range(-1.5, 1.5), cex = 0.1, col = 'grey10',
+.mainPlot <- function(gPos, l2r, Up, Lo){
+  cat('mainPlot\n')
+  plot(gPos, runmed(l2r, k = 11),
+       ylim = range(-1.5, 1.5), cex = 0.1, col = 'grey20',
        cex.axis = 1, cex.lab = 1.5, las = 1, mar = c(10, 10, 10, 10), mgp = c(3, 1, 0), cex.main = 1.5,
        xlab = 'Genomic position', ylab = 'Log2Ratio',
-       main = paste(Id, '\nGain threshold:', round(Up, 3), '- Lost threshold:', round(Lo, 3)))
-  lines(gPos, runmed(lr, k = 101))
+       main = paste(currentSample, ' - ', currentId, '\nGain threshold:', round(Up, 3), '- Lost threshold:', round(Lo, 3)))
+  lines(gPos, runmed(l2r, k = 81))
 }
 
 .addSegments <- function(segTable, Up, Lo, lossCol, normCol, gainCol){
+  cat('addSegments\n')
   segCols <- ifelse(segTable$seg.med <= Lo, lossCol,
                     ifelse(segTable$seg.med >= Up, gainCol, normCol))
   segments(x0 = segTable$loc.start, y0 = segTable$seg.med,
@@ -58,6 +66,7 @@
 }
   
 .addLabel <- function(tmp, Up, Lo, lossCol, normCol, gainCol){
+  cat('addLabel\n')
   geneValue <- tmp$Log2Ratio
   symbol <- as.character(tmp$Symbol)
   Col <- ifelse(geneValue <= Lo, lossCol, ifelse(geneValue >= Up, gainCol, normCol))
@@ -71,11 +80,31 @@
       #  labels = paste0(tmp$Symbol, '\n(Log2Ratio = ', round(geneValue, 3), ')'), cex = 1.5, font = 2)
         labels = c(symbol, paste0('\n\n(Log2R = ', round(geneValue, 3), ')')), cex = c(1.5, 1.25), font = 2)
 }
+
+.getData <- function(synId){
+  cat('getData\n')
+  cgh <- synGet(synId)
+  shinyData <- get(load(cgh@filePath))
+  segTable <- getSegTable(shinyData) #@segTable
+  cnSet <- getCNset(shinyData) #@cnSet
+  gPos <- cnSet$genomicPos[cnSet$ChrNum %in% 1:23]
+  l2r <- cnSet$Log2Ratio[cnSet$ChrNum %in% 1:23]
+  currentSample <- gsub('_syn(.)*', '', c(propertyValue(cgh, 'name')))
+  Samp <- seq(1, length(l2r), len = 20e3)
+  gPos <- gPos[Samp]
+  l2r <- l2r[Samp]
+  if(any(is.na(l2r))){
+    NAs <- which(is.na(l2r))
+    l2r <- l2r[-NAs]
+    gPos <- gPos[-NAs]
+  }
+  segTable <- segTable[which(segTable$chrom %in% 1:23),]
+  currentId <- synId
+  StoreData(cgh, gPos, l2r, segTable, currentSample, currentId)
+}
+
 # End helper functions
 ###########################
-
-
-require(synapseClient)
 
 # Load annot tables
 e <- synGet('syn1877556')
@@ -83,16 +112,11 @@ HG19 <- read.csv(e@filePath, header = TRUE, sep = '\t')
 e <- synGet('syn1877601')
 geneDB <- readRDS(e@filePath)
 
-# Load data
-cat('\nLoading data...')
-cgh  <- synGet('syn1895708')
-load(cgh@filePath)
-segTable = shinyData$segTable
-gPos <- shinyData$gPos
-lr <- shinyData$L2R
-Id <- shinyData$id
-cat('\n\n')
-
+# Load workflow
+if(!exists('cghObj')){
+  workflow <- synGet('syn2128342')
+  source(workflow@filePath)
+  }
 
 #
 shinyServer(function(input, output) {
@@ -101,14 +125,19 @@ shinyServer(function(input, output) {
   # Plot and table are updated each time a new gene symbol is called.
  	# createPlot is the reactive function called by renderPlot() to generate the main plot.
   # createTable is the reactive function called by renderTable()
-     
+  
  	createPlot <- reactive({
-    Up = log2(1.15) # gain = 15%
- 	  Lo = log2(0.90)  # lost = 10%
-    gainCol <- rgb(0, 0.475, 1, 1)
-    lossCol <- 'red3'
-    normCol <- 'grey60'
-    .mainPlot(gPos, lr, Up, Lo)
+ 	  if(!exists('currentId') | (exists('currentId') && currentId != input$Samp)){
+       cat('new data\n')
+       #Remove(shinyData, gPos, l2r, segTable, currentId, currentSample)
+       .getData(input$Samp)
+ 	      }
+ 	  cat(currentSample, '\t', currentId, '\n')
+ 	  output$Id <- renderText(paste(currentSample, input$Samp, sep = ' - '))
+ 	  
+    Up = log2(1.15); Lo = log2(0.90) # gain = 15%, lost = 10%
+    gainCol <- rgb(0, 0.475, 1, 1); lossCol <- 'red3'; normCol <- 'grey60'
+    .mainPlot(gPos, l2r, Up, Lo)
     .addSegments(segTable, Up, Lo, lossCol, normCol, gainCol)
     .locateChr(1.5) # yvalue: what heigh to write
   	gene <- toupper(input$PredefSymb)
@@ -119,8 +148,7 @@ shinyServer(function(input, output) {
   		  .addLabel(tmp, Up, Lo, lossCol, 'grey30', gainCol)
   	  }
 	})
-  output$Profile <- renderPlot({createPlot()})
-	
+ 	 	
 	createTable <- reactive({
 		gene <- toupper(input$PredefSymb)
   	if(input$OtherSymb != '') gene = toupper(input$OtherSymb)
@@ -134,8 +162,10 @@ shinyServer(function(input, output) {
 			else data.frame(Symbol = paste0('Too bad!! "', gene,'" is not a valid symbol'))
 			}
 		})
- 	output$geneTable <- renderTable({createTable()})
-	}
+
+  output$Profile <- renderPlot({createPlot()})
+  output$geneTable <- renderTable({createTable()})
+}
 )
 
 

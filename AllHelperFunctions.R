@@ -114,13 +114,13 @@ CyAdjust <- function(cnSet, Fract, Centr){
 	Compute and adjust the Log2(Cy3/Cy5)
 	Return the data.frame with a supplementary column: Log2Ratio
 	'
-	cat('\nCy effect adjustment...')
+	cat('Cy effect adjustment...\n')
 	g <- log2(cnSet$gMedianSignal)					# Ref in Cy3
 	r <- log2(cnSet$rMedianSignal)					# Test in Cy5
 
 	# Calculates weights to correct the dilution effect (due to tumor cell rate). No effect if Fract = 1. DO NOT USE until validation !
 	if(!is.null(Fract)){
-		cat('\nCompute Fract adjustment...')
+		cat('Compute Fract adjustment...')
 		Q <- quantile(r, Fract, na.rm = TRUE)
 		w <- 1/(1+exp(1/sqrt(Fract)*(Q-r)))
 		r <- r*(1 + (1-Fract)*w)
@@ -143,10 +143,16 @@ GCadjust <- function(cnSet, gridName){
 	Called by adjustSignal(object)
 	Adjust the GC%
 	'
-	arrayInfoPath = '/Users/fredcommo/Documents/Projet Safir/Arrays Infos/'
-	cat('GC% adjustment...')
+  # If gridName: "022060_D_F_20100501", use the latest version: "022060_D_F_20111015"
+#   if(gridName == "022060_D_F_20100501") gridName <- '022060_D_F_20111015'
+# 	arrayInfoPath = '/Users/fredcommo/Documents/Projet_Safir/Arrays_Infos/'
+# 	AgilentDB = readRDS(paste0(arrayInfoPath, gridName, '.rds'))
+	if(grepl("022060", gridName)){ # == "022060_D_F_20100501") 
+    ent <- synGet('syn2141435')
+    AgilentDB <- readRDS(ent@filePath)
+	}
+  cat('GC% adjustment...')
 	cnSet <- cnSet[order(cnSet$ProbeName),]
-	AgilentDB = readRDS(paste0(arrayInfoPath, gridName, '.rds'))
 	AgilentDB <- AgilentDB[order(AgilentDB$ProbeID),]
 	AgilentDB <- AgilentDB[which(AgilentDB$ProbeID %in% cnSet$ProbeName),]
 
@@ -165,11 +171,31 @@ GCadjust <- function(cnSet, gridName){
 
 #################
 
+.dlrs <- function(x){
+  nx <- length(x)
+  if (nx<3) {
+    stop("Vector length>2 needed for computation")
+  }
+  tmp <- embed(x,2)
+  diffs <- tmp[,2]-tmp[,1]
+  dlrs <- IQR(diffs, na.rm = TRUE)/(sqrt(2)*1.34)
+  return(dlrs)
+}
+
+.MAD <- function(LR){
+  tmp <- abs(LR - median(LR, na.rm = TRUE))
+  return(median(tmp, na.rm = TRUE))
+}
+
 .addGenomicPos <- function(cnSet){
-		cat('\n\nAdding hg19 genomic positions...')
-		arrayInfoPath = '/Users/fredcommo/Documents/Projet Safir/Arrays Infos/'
-		hg19 <- read.csv(paste(arrayInfoPath, 'human.chrom.info.hg19.FC.txt', sep = ''), header = TRUE, sep = '\t')
-		cumLen = cumsum(as.numeric(hg19$length))
+		cat('Adding hg19 genomic positions...\t')
+# 		arrayInfoPath = '/Users/fredcommo/Documents/Projet_Safir/Arrays_Infos/'
+# 		hg19 <- read.csv(paste(arrayInfoPath, 'human.chrom.info.hg19.FC.txt', sep = ''), header = TRUE, sep = '\t')
+    if(!exists('hg19')){
+      ent <- synGet('syn2141399')
+      hg19 <- read.csv(ent@filePath, header = TRUE, sep = '\t')
+    }
+    cumLen = cumsum(as.numeric(hg19$length))
 		cumLen = c(0, cumLen[-length(cumLen)])
 		cnSet = cnSet[order(cnSet$ChrNum, cnSet$ChrStart, cnSet$ProbeName), ]
 		chrTable = table(cnSet$ChrNum, useNA = 'ifany')
@@ -216,7 +242,7 @@ GCadjust <- function(cnSet, gridName){
 	Called by adjustSignal(object)
 	Replace the outliers by the medians of the +/- n neighbours
 	'
-	cat('\nSuppressing outliers...')
+	cat('Suppressing outliers...')
 	p = length(x)
 	xnew <- xprim <- c(x[1:n], x, x[(p-n+1):p])
 	for(i in (n+1):p){
@@ -225,7 +251,7 @@ GCadjust <- function(cnSet, gridName){
 		else xnew[i] <- NA
 		}
 	xnew <- xnew[(n+1):(p+n)]
-	cat('\tDone.')
+	cat('\tDone.\n')
 	return(xnew)
 }
 
@@ -546,9 +572,13 @@ geneRequest.v7 <- function(geneId, database, verbose = TRUE){
     }
  
 	# Add genomic position.
-  	arrayInfoPath = '/Users/fredcommo/Documents/Projet Safir/Arrays Infos/'
-	hg19 <- read.csv(paste(arrayInfoPath, 'human.chrom.info.hg19.FC.txt', sep = ''), header = TRUE, sep = '\t')
-	cumLen = cumsum(as.numeric(hg19$length))
+#   arrayInfoPath = '/Users/fredcommo/Documents/Projet_Safir/Arrays_Infos/'
+# 	hg19 <- read.csv(paste(arrayInfoPath, 'human.chrom.info.hg19.FC.txt', sep = ''), header = TRUE, sep = '\t')
+  if(!exists('hg19')){
+    ent <- synGet('syn2141399')
+    hg19 <- read.csv(ent@filePath, header = TRUE, sep = '\t')
+  }
+  cumLen = cumsum(as.numeric(hg19$length))
 	cumLen = c(0, cumLen[-length(cumLen)])
 	output = cbind.data.frame(output[,-ncol(output)], genomicStart = rep(NA, nrow(output)), genomicStop = rep(NA, nrow(output)), entrezgene = output[,ncol(output)])
 	chr = as.numeric(as.character(output$Chromosome))
@@ -672,7 +702,7 @@ FullHtml <- function(object, gain = log2(2.25/2), loss = log2(1.75/2),
 								sangercensus = TRUE, pharmgkb = TRUE, keggtodrug = TRUE, ctdbase = TRUE, clintrials = TRUE, Restrict = TRUE,
 								filePath){
 		# Load information tables
-		# arrayInfoPath = '/Users/fredcommo/Documents/Projet Safir/Arrays Infos/'
+		# arrayInfoPath = '/Users/fredcommo/Documents/Projet_Safir/Arrays Infos/'
 		cat('Sanger:', sangercensus, 'pharmgKB:', pharmgkb, 'keggToDrug:',keggtodrug,
 			'ctdbase:', ctdbase, 'clintrails:', clintrials, '\n')
 			
@@ -798,17 +828,48 @@ FullHtml <- function(object, gain = log2(2.25/2), loss = log2(1.75/2),
 				return(NULL)
 }
 
-arrayInfoPath = '/Users/fredcommo/Documents/Projet Safir/Arrays Infos/'
-census.db <- read.table(paste0(arrayInfoPath, "CensusTable_Annot_FC.txt"), header = T, sep = "\t")
-PGKB.db <- read.csv(paste0(arrayInfoPath, "relationships.tsv"), header = T, sep = "\t")
-PGKB.db <- PGKB.db[grepl('Drug', PGKB.db$Entity2_id),]
+# arrayInfoPath = '/Users/fredcommo/Documents/Projet_Safir/Arrays_Infos/'
+# census.db <- read.table(paste0(arrayInfoPath, "CensusTable_Annot_FC.txt"), header = T, sep = "\t")
+#PGKB.db <- read.csv(paste0(arrayInfoPath, "relationships.tsv"), header = T, sep = "\t")
+#PGKB.db <- PGKB.db[grepl('Drug', PGKB.db$Entity2_id),]
 #PGKB.db <- PGKB.db[order(PGKB.db$Entity1_name),]
-KeggToDrug.db <- read.csv(paste0(arrayInfoPath, "Kegg_Drugs_Table.txt"), header = T, sep = "\t")
-KeggToDrug.db <- KeggToDrug.db[KeggToDrug.db$nDrug > 0,]
-CTDb <- read.csv(paste0(arrayInfoPath, "CTD_chem_gene_ixns_SansDuplic.txt"), header = T, sep = "\t")
-CTDbList <- CTDb$GeneSymbol
-clinTrials.db <- read.csv(paste0(arrayInfoPath, "ClinicalTrials_Drugs_Table.txt"), header = T, sep = "\t")
-clinTrials.db <- clinTrials.db[clinTrials.db$CTfound > 0,]
+# KeggToDrug.db <- read.csv(paste0(arrayInfoPath, "Kegg_Drugs_Table.txt"), header = T, sep = "\t")
+# KeggToDrug.db <- KeggToDrug.db[KeggToDrug.db$nDrug > 0,]
+# CTDb <- read.csv(paste0(arrayInfoPath, "CTD_chem_gene_ixns_SansDuplic.txt"), header = T, sep = "\t")
+# CTDbList <- CTDb$GeneSymbol
+# clinTrials.db <- read.csv(paste0(arrayInfoPath, "ClinicalTrials_Drugs_Table.txt"), header = T, sep = "\t")
+# clinTrials.db <- clinTrials.db[clinTrials.db$CTfound > 0,]
+
+# Load tables
+if(!exists('census.db')){
+  cat('Reading Census list...\n')
+  ent <- synGet('syn2141468')
+  census.db <- read.table(ent@filePath, header = T, sep = "\t")
+  }
+if(!exists('PGKB.db')){
+  cat('Reading PharmGKb list...\n')
+  ent <- synGet('syn2141518')
+  PGKB.db <- read.csv(ent@filePath, header = T, sep = "\t")
+  PGKB.db <- PGKB.db[grepl('Drug', PGKB.db$Entity2_id),]
+}
+if(!exists('KeggToDrug.db')){
+  cat('Reading Kegg list...\n')
+  ent <- synGet('syn2141507')
+  KeggToDrug.db <- read.csv(ent@filePath, header = T, sep = "\t")
+  KeggToDrug.db <- KeggToDrug.db[KeggToDrug.db$nDrug > 0,]
+}
+if(!exists('CTDb')){
+  cat('Reading CTDb list...\n')
+  ent <- synGet('syn2141525')
+  CTDb <- read.csv(ent@filePath, header = T, sep = "\t")
+  CTDbList <- as.character(CTDb$GeneSymbol)
+  }
+if(!exists('clinTrials.db')){
+  cat('Reading Clinical trials list...\n')
+  ent <- synGet('syn2141534')
+  clinTrials.db <- read.csv(ent@filePath, header = T, sep = "\t")
+  clinTrials.db <- clinTrials.db[clinTrials.db$CTfound > 0,]
+}
 
 filtrSangerCensus <- function(Symbols, census.db){
 	cat('Searching in Sanger Cancer...\t')

@@ -171,7 +171,7 @@ setMethod('readCN', 'AffyObj',
 		cnSet <- cnSet[order(cnSet$ChrNum, cnSet$ChrStart), 1:6]
 		
 		# # Genomic postions
-		# arrayInfoPath = '/Users/fredcommo/Documents/Projet Safir/Arrays Infos/'
+		# arrayInfoPath = '/Users/fredcommo/Documents/Projet_Safir/Arrays Infos/'
 		# hg19 <- read.csv(paste(arrayInfoPath, 'human.chrom.info.hg19.FC.txt', sep = ''), header = TRUE, sep = '\t')
 		# cumLen = cumsum(as.numeric(hg19$length))
 		# cumLen = c(0, cumLen[-length(cumLen)])
@@ -205,10 +205,10 @@ setMethod('suppressFlags', 'cghObj',
 		if(getInfo(object, 'platform') == 'Agilent'){
 			cat('\tSuppressing flagged probes...')
 			cnSet <- getCNset(object)
-			flags <- which(	cnSet$gIsSaturated == 1 | 						# 1 = non valid gIsSaturated
-									cnSet$rIsSaturated == 1 | 						# 1 = non valid rIsSaturated
-									cnSet$gIsFeatNonUnifOL == 1 | 				# 1 = non valid gIsFeatureNonUnifOL
-									cnSet$rIsFeatNonUnifOL == 1 | 				# 1 = non valid rIsFeatureNonUnifOL
+			flags <- which(	cnSet$gIsSaturated == 1 | 			# 1 = non valid gIsSaturated
+									cnSet$rIsSaturated == 1 | 					# 1 = non valid rIsSaturated
+									cnSet$gIsFeatNonUnifOL == 1 | 			# 1 = non valid gIsFeatureNonUnifOL
+									cnSet$rIsFeatNonUnifOL == 1 | 			# 1 = non valid rIsFeatureNonUnifOL
 									cnSet$gIsWellAboveBG == 0 | 				# 0 = non valid gIsWellAboveBG
 									cnSet$rIsWellAboveBG == 0)					# 0 = non valid rIsWellAboveBG
 			cnSet$gMedianSignal[flags] = cnSet$rMedianSignal[flags] = NA
@@ -287,8 +287,10 @@ setMethod('adjustSignal', 'cghObj', function(object, Cy = TRUE, Fract = 1, GC = 
 	# Need to add genomic positions, then order by genomicPos
 	cnSet <- .addGenomicPos(cnSet)
 	cnSet$Log2Ratio <- .supprOutliers(cnSet$Log2Ratio)
+	object@param$dLRs <- .dlrs(cnSet$Log2Ratio)
+	object@param$MAD <- .MAD(cnSet$Log2Ratio)
 	object@cnSet <- cnSet
-	cat('\n')
+	cat('dLRs:', object@param$dLRs, '\tMAD:', object@param$MAD, '\n')
 	return(object)
 	}
 )
@@ -317,32 +319,32 @@ setMethod('EMnormalize', 'cghObj',
 	testLR <- cnSet$Log2Ratio
 	runLR <- smoothLR(testLR, getInfo(object, 'platform'), cut, K = 301)		# helper function
 
-	cat('\nBuilding model...')
+	cat('Building model...')
 	EMmodel <- buildEMmodel(runLR, G, by = 20)										# helper function
 	nG <- EMmodel$nG; m <- EMmodel$m; s <- EMmodel$s ; p <- EMmodel$p
-	cat('\tDone.')
+	cat('\tDone.\n')
 	
 	# merge Classes: depending on MergePeaks and MergeVal
 	if(MergePeaks){
-		cat('\nMerging the closer peaks...')
+		cat('Merging the closer peaks...')
 		mergedValues <- mergePeaks(nG, m, s, p, MergeVal)								# helper function
 		nG <- mergedValues$nG; m <- mergedValues$m; s <- mergedValues$s ;p <- mergedValues$p
-		cat('\tDone.')
+		cat('\tDone.\n')
 		}
 
 	# compute densities
-	cat('\nComputing densities...')
+	cat('Computing densities...')
 	denLR <- density(runLR)
 	computeD <- computeDensities(length(runLR), m, p, s)								# helper function
 	dList <- computeD$dList
 	peaks <- computeD$peaks
 	kurt <- computeD$kurt
-	cat('\tDone.')
+	cat('\tDone.\n')
 	
-	cat('\nGaussian mixture:')
+	cat('Gaussian mixture:')
+	cat("\nn.peaks = ", nG) 
 	bestPeak <- chooseBestPeak(peaks, m, peakThresh)
 	correct = m[bestPeak]
-	cat("\nn.peaks = ", nG) 
 	# cat('\nmeans:', m, '\nProp:', p, '\nSigmaSq:', s)
 	cat ('\nCVs per group:\n')
 	for (grp in 1:length(m)){
@@ -353,7 +355,9 @@ setMethod('EMnormalize', 'cghObj',
 			}
 	cat("\n\nEM correction factor = ", correct, "\n\n")
 
-	Title = paste(getInfo(object, 'sampleId'), "\nEM centralization: correction.factor =", round(correct, 5))
+  sampleId <- gsub('\\.(.*)', '', getInfo(object, 'fileName'))
+  synapseId <- getInfo(object, 'synapseId')
+	Title = paste(paste(sampleId, synapseId, sep = ' - '), "\nEM centralization: correction.factor =", round(correct, 5))
 	EMplot = plotEMmodel(runLR, dList, m, bestPeak, cut, Title)
 
 	# return the full cgh objet containing the Log2Ratios adjusted for Cy and CG, and centralized by EM
@@ -361,6 +365,7 @@ setMethod('EMnormalize', 'cghObj',
 	object@cnSet = cnSet
 	object@param$EMcentralized = TRUE
 	object@param$nPeak = nG
+	object@param$PeakValues = as.numeric(m)
 	object@param$SigmaSq = s
 	object@param$correctionValue = as.numeric(correct)
 	object@probesDensity = EMplot
@@ -384,7 +389,7 @@ setMethod('SegmentCGH', 'cghObj',
 		genomicPos <- cnSet$genomicPos
 
 		cat('\nBuilding CNA object...')
-		cna.obj <- CNA(LR, Chr, genomicPos, data.type = "logratio", sampleid = paste(getInfo(object, 'sampleId'), getInfo(object, 'barCode'), sep = "_"))
+		cna.obj <- CNA(LR, Chr, genomicPos, data.type = "logratio", sampleid = paste(getInfo(object, 'synapseId'), getInfo(object, 'barCode'), sep = "_"))
 		cat('\tDone.')
 		
 		cat('\nSegmenting...')
@@ -408,6 +413,7 @@ setMethod('SegmentCGH', 'cghObj',
 		# Update
 		# object@info$dLRsd <- as.character(dLRsd(cnSet$Log2Ratio))
 		# object@info$ScriptVersion <- SVersion 	! How to add the script-version number ?
+    object@param$UndoSD <- UndoSD
 		object@segTable = seg.cna.obj$output
 		object@cnSet = cnSet
 		return(object)
@@ -417,11 +423,15 @@ setMethod('SegmentCGH', 'cghObj',
 setMethod('createProfile', 'cghObj',
 function(object, gain = log2(2.25/2), loss = log2(1.80/2), Ylim = NULL){
 	require(ggplot2, quietly = TRUE)
-	arrayInfoPath = '/Users/fredcommo/Documents/Projet Safir/Arrays Infos/'
 	myBlue <- rgb(0, 0.45, 1, 1)
-	# wrapper <- function(x, ...) paste(strwrap(x, ...), collapse = "\n")
+# 	arrayInfoPath = '/Users/fredcommo/Documents/Projet_Safir/Arrays_Infos/'
+# 	hg19 <- read.csv(paste0(arrayInfoPath, 'human.chrom.info.hg19.FC.txt'), header = TRUE, sep = '\t')
 
-	hg19 <- read.csv(paste0(arrayInfoPath, 'human.chrom.info.hg19.FC.txt'), header = TRUE, sep = '\t')
+  # Load hg19 chromosome length table
+  if(!exists('hg19')){
+    ent <- synGet('syn2141399')
+    hg19 <- read.csv(ent@filePath, header = TRUE, sep = '\t')
+  }
 	cumLen = cumsum(as.numeric(hg19$length))
 	cumCentr <- 1/2*cumLen[1]
 	for(chr in 2:length(cumLen)) cumCentr = c(cumCentr, cumLen[chr-1] + 1/2*hg19$length[chr])
@@ -429,7 +439,9 @@ function(object, gain = log2(2.25/2), loss = log2(1.80/2), Ylim = NULL){
 	cnSet = getCNset(object)
 	cnSet <- cnSet[cnSet$ChrNum != 24,]
 	segTable = getSegTable(object)
-	Title = paste(getInfo(object, 'sampleId'), '-', getInfo(object, 'analyseDate'),
+	Title = paste(gsub('.txt.bz2', '', getInfo(object, 'fileName')), '-',
+                getInfo(object, 'synapseId'), '-',
+                getInfo(object, 'analyseDate'),
 						'\nGain threshold: ', round(gain, 3), ' Loss threshold:', round(loss, 3))
 
 	if(any(is.na(cnSet))){
@@ -467,8 +479,11 @@ function(object, gain = log2(2.25/2), loss = log2(1.80/2), Ylim = NULL){
 	}
 )
 
-arrayInfoPath = '/Users/fredcommo/Documents/Projet Safir/Arrays Infos/'		
-geneDB <- readRDS(paste0(arrayInfoPath, 'myGeneDB_2013_Mar_26.rds'))
+# arrayInfoPath = '/Users/fredcommo/Documents/Projet_Safir/Arrays_Infos/'		
+# geneDB <- readRDS(paste0(arrayInfoPath, 'myGeneDB_2013_Mar_26.rds'))
+ent <- synGet('syn2141368')
+geneDB <- readRDS(ent@filePath)
+
 setMethod('geneOfInt', 'cghObj',
 		function(object, geneList, DB = geneDB){
 		segTable = getSegTable(object)
@@ -494,12 +509,3 @@ setMethod('geneOfInt', 'cghObj',
 		}
 )
 
-
-
-
-
-
-		
-		
-		
-		
